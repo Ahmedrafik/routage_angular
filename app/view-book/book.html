@@ -1,0 +1,11 @@
+
+<h1>{{bookCtrl.book.title}}</h1>
+<img ng-src="{{bookCtrl.book.img}}"/>
+<div>
+	<span>Auteur : {{bookCtrl.book.author}}</span> <br>
+	<span>Editeur : {{bookCtrl.book.publisher}}</span>
+</div>
+<div ng-bind-html="bookCtrl.book.desc"></div>
+
+
+<!-- $sce est un service angular qui permet d'ajouter du html dont on est sur -->

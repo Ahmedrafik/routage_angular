@@ -1,0 +1,21 @@
+
+<table>
+	<tr>
+		<td>Livre</td>
+		<td>Référence</td>
+		<td>Titre</td>
+		<td>Auteur</td>
+		<td>Prix</td>
+		
+	</tr>
+
+	<tr ng-repeat="book in catalogCtrl.bookList">
+		<td><img ng-src="{{book.img}}"/></td>
+		<td>{{book['ISBN-10']}}</td>
+		<td>{{book.title}}</td>
+		<td>{{book.author}}</td>
+		<td>{{book.price | currency}}</td>
+		<td><a href="#/book/{{book._id.$oid}}"> Consulter la fiche</a></td>
+
+	</tr>
+</table>
