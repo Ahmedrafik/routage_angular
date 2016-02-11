@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('catalogMod', ['ngRoute'])
+angular.module('catalogMod', ['ngRoute', 'FilterApp'])
 	.config(function($routeProvider){
 		$routeProvider.when('/catalog', {
 			templateUrl : 'view-catalog/catalog.html',
@@ -8,6 +8,7 @@ angular.module('catalogMod', ['ngRoute'])
 			controllerAs : 'catalogCtrl'
 		});
 	})
+
 	.controller('CatalogController', function($http, $scope, $rootScope){
 		var catalog = this;
 		var TAXE = 26;
@@ -21,6 +22,16 @@ angular.module('catalogMod', ['ngRoute'])
 		    }, function (response) {
 		        throw "Erreur de chargement du catalogue";
 		    });
-		
-			
+
+		  catalog.sortOptions = [
+		  	{expr : 'price', reverse : false, label : "Prix croissant"},
+		  	{expr : 'price', reverse : true, label : "Prix décroissant"},
+		  	{expr : 'title', reverse : false, label : "Titre"}
+		  ]	
+
+		  catalog.search = {
+		  	text : {},
+		  	price : {},
+		  	sort : catalog.sortOptions[0]
+		  };	
 	})
