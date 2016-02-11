@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('catalogMod', ['ngRoute', 'FilterApp'])
+angular.module('catalogMod', ['ngRoute', 'FilterApp', 'services'])
 	.config(function($routeProvider){
 		$routeProvider.when('/catalog', {
 			templateUrl : 'view-catalog/catalog.html',
@@ -9,14 +9,14 @@ angular.module('catalogMod', ['ngRoute', 'FilterApp'])
 		});
 	})
 
-	.controller('CatalogController', function($http, $scope, $rootScope){
+	.controller('CatalogController', function(catalogService, $scope, $rootScope, $location, cart, state, sortOptionsService){
 		var catalog = this;
 		var TAXE = 26;
 		var URL = "https://api.mongolab.com/api/1/databases/books/collections/books/?apiKey=d3qvB8ldYFW2KSynHRediqLuBLP8JA8i";
 		$rootScope.pageTitle = 'catalogue';	
 		catalog.bookList = [];
 
-		$http.get(URL)
+		/*$http.get(URL)
 		    .then(function (response) {
 		       catalog.bookList = response.data;
 		    }, function (response) {
@@ -33,5 +33,18 @@ angular.module('catalogMod', ['ngRoute', 'FilterApp'])
 		  	text : {},
 		  	price : {},
 		  	sort : catalog.sortOptions[0]
-		  };	
+		  }; */
+
+		catalogService.getList().then(function (data) {
+			catalog.bookList = data;
+		});
+
+
+		catalog.addcart = function(book){
+			cart.addBook(book);
+			$location.path('/cart')
+		};
+
+		  catalog.state = state('/catalog', {sort : sortOptionsService.default});
+		  catalog.sortOptions = sortOptionsService.list;
 	})

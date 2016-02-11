@@ -1,9 +1,9 @@
 <div>
-	Rechercher par titre : <input type="text" ng-model="catalogCtrl.search.text.title"> 
+	Rechercher par titre : <input type="text" ng-model="catalogCtrl.state.text.title"> 
 	<br><br>
-	Rechercher par prix compris entre : <input type="number" ng-model="catalogCtrl.search.price.prixmini"> et <input type="number" ng-model="catalogCtrl.search.price.prixmaxi">
+	Rechercher par prix compris entre : <input type="number" ng-model="catalogCtrl.state.price.prixmini"> et <input type="number" ng-model="catalogCtrl.state.price.prixmaxi">
 	<br><br>
-	Trier par : <select ng-model="catalogCtrl.search.sort" ng-options="option.label for option in catalogCtrl.sortOptions"></select>	
+	Trier par : <select ng-model="catalogCtrl.state.sort" ng-options="option.label for option in catalogCtrl.sortOptions"></select>	
 
 	<br><br>
 
@@ -18,21 +18,24 @@
 		<td>Référence</td>
 		<td>Titre</td>
 		<td>Auteur</td>
+		<td>Rating</td>
 		<td>Prix</td>
 		
 	</tr>
 
 	<tr ng-repeat="book in catalogCtrl.bookList 
-				| filter : catalogCtrl.search.text 
-				| searchPrice : catalogCtrl.search.price 
-				| orderBy : catalogCtrl.search.sort.expr : catalogCtrl.search.sort.reverse  
+				| filter : catalogCtrl.state.text 
+				| searchPrice : catalogCtrl.state.price 
+				| orderBy : catalogCtrl.state.sort.expr : catalogCtrl.state.sort.reverse  
 											as catalogFiltre" >
 		<td><img ng-src="{{book.img}}"/></td>
 		<td>{{book['ISBN-10']}}</td>
 		<td>{{book.title}}</td>
 		<td>{{book.author}}</td>
+		<td><span rating="{{book.rating}}"></span></td>
 		<td>{{book.price | currency}}</td>
 		<td><a href="#/book/{{book._id.$oid}}"> Consulter la fiche</a></td>
+		<td><button ng-click="catalogCtrl.addcart(book)">Ajouter au panier</button></td>
 
 	</tr>
 </table>

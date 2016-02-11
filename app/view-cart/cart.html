@@ -1,0 +1,22 @@
+<table>
+	<tr>
+		<td>Livre</td>
+		<td>Titre</td>
+		<td>Quantité</td>
+		<td>Prix unitaire HT</td>
+		<td>Prix total HT</td>
+		<td>Prix total TTC</td>
+		
+	</tr>
+
+	<tr ng-repeat="row in cartCtrl.cartService.rows" ng-class="{big: cartCtrl.cartService.isBig(row)}"> 
+		<td><img ng-src="{{row.book.img}}"/></td>
+		<td><a href="#/book/{{row.book._id.$oid}}">{{row.book.title}}</a></td>
+		<td>{{row.quantite}}</td>
+		<td>{{row.book.price | currency}}</td>
+		<td>{{cartCtrl.cartService.totalHt(row) | currency}}</td>
+		<td>{{cartCtrl.cartService.prixTtc(row) | currency}}</td>
+	</tr>
+</table>
+
+<a href="#/catalog">Continuer mes achats</a>
